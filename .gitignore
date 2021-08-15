@@ -1,0 +1,4 @@
+log/**/
+data/log/**
+*.png
+*.jpg
