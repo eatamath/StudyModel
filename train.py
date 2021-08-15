@@ -13,17 +13,29 @@ import logger
 from settings import *
 from torch.utils.tensorboard import SummaryWriter
 
+ENV = 'win'
+
 if not os.path.exists(DATA_PATH):
     os.mkdir(DATA_PATH)
 if not os.path.exists(LOG_PATH):
     os.mkdir(LOG_PATH)
+if ENV=='win':
+    data_root = r'D:\File\Dataset\PascalVOC2012\VOC2012'
+    img_root = os.path.join(data_root, 'JPEGImages')
+    mask_root = os.path.join(data_root, 'SegmentationClass')
+    list_file_train = os.path.join(data_root, r'ImageSets\Segmentation\train.txt')
+    list_file_val = os.path.join(data_root, r'ImageSets\Segmentation\trainval.txt')
+    list_file_test = os.path.join(data_root, r'ImageSets\Segmentation\val.txt')
+    DEVICE = 'cpu'
+elif ENV=='linux':
+    data_root = r'~/Documents/datasets'
+    img_root = os.path.join(data_root, 'JPEGImages')
+    mask_root = os.path.join(data_root, 'SegmentationClass')
+    list_file_train = os.path.join(data_root, r'ImageSets/Segmentation/train.txt')
+    list_file_val = os.path.join(data_root, r'ImageSets/Segmentation/trainval.txt')
+    list_file_test = os.path.join(data_root, r'ImageSets/Segmentation/val.txt')
+    DEVICE = 'cuda'
 
-data_root = r'D:\File\Dataset\PascalVOC2012\VOC2012'
-img_root = os.path.join(data_root, 'JPEGImages')
-mask_root = os.path.join(data_root, 'SegmentationClass')
-list_file_train = os.path.join(data_root, r'ImageSets\Segmentation\train.txt')
-list_file_val = os.path.join(data_root, r'ImageSets\Segmentation\trainval.txt')
-list_file_test = os.path.join(data_root, r'ImageSets\Segmentation\val.txt')
 dataset_train = PASCAL_dataset_segmentation(
     img_root=img_root,
     mask_root=mask_root,
